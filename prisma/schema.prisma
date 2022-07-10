@@ -14,9 +14,9 @@ model Tool {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title String @db.LongText
+  title String @unique
   link String
-  description String
+  description String @db.LongText
   tags TagsOnTools[]
 }
 
@@ -32,8 +32,18 @@ model TagsOnTools {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  tag_id Int
-  tool_id Int
-  tag Tag @relation(fields: [tag_id], references: [id])
-  tool Tool @relation(fields: [tool_id], references: [id])
+  tagId Int
+  toolId Int
+  tag Tag @relation(fields: [tagId], references: [id])
+  tool Tool @relation(fields: [toolId], references: [id])
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  firstName String 
+  lastName String
+  email String @unique
+  password String
 }

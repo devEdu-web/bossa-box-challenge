@@ -12,7 +12,7 @@
 - [ ] Create endpoint to delete a tool by its id.
 
 ## Authentication
-- [ ] Create endpoint to register users.
+- [ ] Create endpoint to issue access tokens.
 - [ ] Create endpoint to log users and return tokens.
 - [ ] Create middleware to validate requests. 
 
@@ -22,4 +22,6 @@ Here the applications will follow the following flow:
 
 ## Database
 
-In the database design I decided to use a many-to-many relationship, in which there is a table `Tool`, a table `Tag` and a table `TagsOnTools`. When the user adds a new tool, we will save the tools and tags and its respective tables and create a relation. But, before saving a tag into the database the application will check if the tag already exists. If so, it won't change the database, but otherwise, it will save the tag.
+In the database design I decided to use a many-to-many relationship, in which there is a table `Tool`, a table `Tag`, a table `TagsOnTools` and a `User`. When the user adds a new tool, we will save the tools and tags and its respective tables and create a relation. But, before saving a tag into the database the application will check if the tag already exists. If so, it won't change the database, but otherwise, it will save the tag.
+
+**Note: Users have no relations with tools. Their role here is for authentication and authorization only.**

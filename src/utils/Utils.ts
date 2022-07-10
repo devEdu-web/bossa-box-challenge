@@ -1,12 +1,14 @@
 import logger from "pino";
 import dayjs from "dayjs";
 import { BaseLogger } from 'pino'
+import bcrypt from 'bcrypt'
 
 interface UtilsInterface {
   log: BaseLogger
+  hashPassword(password: string): Promise<string>
 }
 
-class Utils {
+class Utils implements UtilsInterface{
 
   public log: BaseLogger
 
@@ -21,6 +23,13 @@ class Utils {
       timestamp: () => `,"time": "${dayjs().format()}"`
     })
   }
+
+  async hashPassword(password: string) {
+    const salt = await bcrypt.genSalt()
+    const hashPassword = await bcrypt.hash(password, salt)
+    return hashPassword
+  }
+
 }
 
 export default new Utils()
