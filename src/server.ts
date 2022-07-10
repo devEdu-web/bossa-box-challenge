@@ -9,4 +9,5 @@ const PORT = process.env.PORT || 3000
 
 server.listen(PORT, () => {
   Utils.log.info(`Server running on PORT ${PORT}`)
+  // console.log(process.env.PRIVATE_KEY)
 })

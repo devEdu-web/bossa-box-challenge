@@ -3,6 +3,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "lib": ["ESNext"],
+    // "esModuleInterop": true,
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */

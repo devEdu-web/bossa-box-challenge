@@ -15,7 +15,7 @@ model Tool {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title String @unique
-  link String
+  link String @unique
   description String @db.LongText
   tags TagsOnTools[]
 }
