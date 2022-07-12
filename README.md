@@ -12,8 +12,8 @@
 - [ ] Create endpoint to delete a tool by its id.
 
 ## Authentication
-- [ ] Create endpoint to issue access tokens.
-- [ ] Create endpoint to log users and return tokens.
+- [x] Create endpoint to issue access tokens.
+- [x] Create endpoint to log users and return tokens.
 - [ ] Create middleware to validate requests. 
 
 Here the applications will follow the following flow:

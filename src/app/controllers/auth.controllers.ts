@@ -57,16 +57,22 @@ class AuthController {
       const isPasswordValid = await Utils.verifyPassword(password, user?.password)
       if(!user || !isPasswordValid) return res.json({error: 'Email or password invalid.'})
 
-      const accessToken = Utils.signJwt(req.body, {
+      const accessToken = Utils.signJwt({
+        email: email,
+        userId: user.id
+      }, {
         expiresIn: config.accessTokenTtl
       })
 
-      const refreshToken = Utils.signJwt(req.body, {
+      const refreshToken = Utils.signJwt({
+        email: email,
+        userId: user.id
+      }, {
         expiresIn: config.refreshTokenTtl
       })
 
-      console.log(accessToken)
-
+      
+      Utils.log.info(`New access and refresh tokens issued to the user with email ${user.email}`)
       return res.status(200).json({
         accessToken,
         refreshToken

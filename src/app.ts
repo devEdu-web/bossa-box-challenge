@@ -1,5 +1,6 @@
 import express from 'express'
 import authRouter from './routes/auth.routes'
+import authMiddleware from './app/middlewares/auth.middleware'
 
 class App {
   public express: express.Application
@@ -12,6 +13,7 @@ class App {
 
   private middlewares() {
     this.express.use(express.json())
+    this.express.use(authMiddleware.deserializeUser)
   }
 
   private routes() {
