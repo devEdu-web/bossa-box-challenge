@@ -43,10 +43,20 @@ class AuthMiddleware {
       return next()
 
     }
-
-
     return next()
   }
+
+  requireUser(req: Request, res: Response, next: NextFunction) {
+    const user = res.locals.user
+    if(!user) {
+      Utils.log.info('No user required, access was denied.')
+      return res.sendStatus(403)
+    }
+    Utils.log.info('User required, access was granted.')
+    next()
+
+  } 
+
 }
 
 export default new AuthMiddleware()
