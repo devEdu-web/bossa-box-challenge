@@ -3,7 +3,7 @@
 ## Business logic
 - [ ] Create endpoint to get all registered tools.
 - [ ] Create endpoint to return tools with an specific tag, using query params
-- [ ] Create endpoint to register a new tool.
+- [x] Create endpoint to register a new tool.
   - [ ] Check if tags exists in database.
   - [ ] Save tags if it doesn't exist.
   - [ ] Get the id of tags saved.
@@ -14,7 +14,7 @@
 ## Authentication
 - [x] Create endpoint to issue access tokens.
 - [x] Create endpoint to log users and return tokens.
-- [ ] Create middleware to validate requests. 
+- [x] Create middleware to validate requests. 
 
 Here the applications will follow the following flow:
 
