@@ -4,5 +4,6 @@ import authMiddleware from "../app/middlewares/auth.middleware";
 const toolsRouter = Router()
 
 toolsRouter.post('/new', authMiddleware.requireUser, toolsControllers.addTool)
+toolsRouter.get('/', authMiddleware.requireUser, toolsControllers.getTools)
 
 export default toolsRouter

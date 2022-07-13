@@ -30,6 +30,15 @@ interface IVerifyJwtReturn {
   decoded: object | string | null
 }
 
+interface IGetToolsResult {
+  id: number
+  createdAt: Date
+  title: string
+  description: string
+  tags: IBaseObject[]
+}
+
+
 class Utils implements UtilsInterface{
 
   public log: BaseLogger
@@ -81,7 +90,7 @@ class Utils implements UtilsInterface{
     }
   }
 
-  genCreateTagsArray(tags: string[]) {
+  genCreateTagArray(tags: string[]) {
     const createTagsArray: Array<object> = []
 
     tags.forEach(tag => {
@@ -92,6 +101,22 @@ class Utils implements UtilsInterface{
     })
 
     return createTagsArray
+  }
+
+  removeNamePropertyFromToolTagsArray(tools: IGetToolsResult[]) {
+    let tagsArray: string[] = []
+    const finalArray: object[] = []
+
+    tools.forEach(tool => {
+      const temporaryTool: any = {...tool}
+      tool.tags.forEach(tag => {
+        tagsArray.push(tag.name)
+      })
+      temporaryTool.tags = tagsArray
+      finalArray.push(temporaryTool)
+      tagsArray = []
+    })
+    return finalArray
   }
 
 }
