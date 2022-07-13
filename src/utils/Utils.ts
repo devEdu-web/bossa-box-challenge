@@ -20,6 +20,10 @@ interface IJwtPayload {
 }
 
 interface IJwtDecoded extends JwtPayload, IJwtPayload {}
+interface IBaseObject {
+  name: string
+}
+
 interface IVerifyJwtReturn {
   isValid: boolean,
   expired: boolean,
@@ -75,6 +79,19 @@ class Utils implements UtilsInterface{
         decoded: null
       }
     }
+  }
+
+  genCreateTagsArray(tags: string[]) {
+    const createTagsArray: Array<object> = []
+
+    tags.forEach(tag => {
+      const baseObject: IBaseObject = {
+        name: tag
+      }
+      createTagsArray.push({...baseObject})
+    })
+
+    return createTagsArray
   }
 
 }

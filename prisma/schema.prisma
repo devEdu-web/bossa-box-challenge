@@ -13,35 +13,35 @@ datasource db {
 model Tool {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // updatedAt DateTime @updatedAt
   title String @unique
   link String @unique
   description String @db.LongText
-  tags TagsOnTools[]
+  tags Tag[]
 }
 
 model Tag {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // updatedAt DateTime @updatedAt
   name String
-  tools TagsOnTools[]
+  tools Tool[]
 }
 
-model TagsOnTools {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tagId Int
-  toolId Int
-  tag Tag @relation(fields: [tagId], references: [id])
-  tool Tool @relation(fields: [toolId], references: [id])
-}
+// model TagsOnTools {
+//   id Int @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   // updatedAt DateTime @updatedAt
+//   tagId Int
+//   toolId Int
+//   tag Tag @relation(fields: [tagId], references: [id])
+//   tool Tool @relation(fields: [toolId], references: [id])
+// }
 
 model User {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // updatedAt DateTime @updatedAt
   firstName String 
   lastName String
   email String @unique

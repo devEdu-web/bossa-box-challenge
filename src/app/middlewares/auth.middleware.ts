@@ -38,7 +38,6 @@ class AuthMiddleware {
       const result = Utils.verifyJwt(newAccessToken)
       res.locals.user = result.decoded
 
-
       Utils.log.info('Deserialize user: Invalid access token were passed. Refresh token was valid, new access token was issued and sent to the client.')
       return next()
 

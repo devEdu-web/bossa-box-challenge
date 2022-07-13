@@ -1,6 +1,7 @@
 import express from 'express'
 import authRouter from './routes/auth.routes'
 import authMiddleware from './app/middlewares/auth.middleware'
+import toolsRouter from './routes/tools.routes'
 
 class App {
   public express: express.Application
@@ -18,6 +19,7 @@ class App {
 
   private routes() {
     this.express.use('/api/auth', authRouter)
+    this.express.use('/api/tools', toolsRouter)
   }
 
 }
