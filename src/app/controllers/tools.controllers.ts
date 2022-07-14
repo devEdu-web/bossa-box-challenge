@@ -1,58 +1,58 @@
-import { Tool, Tag } from '@prisma/client'
-import { Request, Response } from 'express'
-import client from '../../database/client'
-import Utils from '../../utils/Utils'
+import { Tool, Tag } from '@prisma/client';
+import { Request, Response } from 'express';
+import client from '../../database/client';
+import Utils from '../../utils/Utils';
 
 interface addToolPayload {
-  title: string
-  link: string
-  description: string
-  tags: Array<string>
+  title: string;
+  link: string;
+  description: string;
+  tags: Array<string>;
 }
 
-interface deleteToolPayload {
-  id: string
+interface filterTool {
+  tag: string
 }
 
 class ToolsController {
   async addTool(req: Request<{}, {}, addToolPayload>, res: Response) {
     try {
-      const { title, link, description, tags } = req.body
-      const tagsInObject = Utils.genCreateTagArray(tags)
+      const { title, link, description, tags } = req.body;
+      const tagsInObject = Utils.genCreateTagArray(tags);
 
       let result: any = await client.tool.upsert({
         where: {
-          title: title
+          title: title,
         },
         update: {
           title,
           link,
-          description
+          description,
         },
         create: {
           title,
-           link,
-           description,
-           tags: {
-            create: tagsInObject
-          }
+          link,
+          description,
+          tags: {
+            create: tagsInObject,
+          },
         },
         select: {
           id: true,
           title: true,
           link: true,
           description: true,
-          tags: true
-        }
-      })
-      Utils.log.info('New tool created with its relations.')
-      result.tags = tags // Overwrite the array of objects - [{name: 'tag1'}, {name: 'tag2'}] with just an array ['tag1', 'tag2']
-      return res.status(201).json(result)
+          tags: true,
+        },
+      });
+      Utils.log.info('New tool created with its relations.');
+      result.tags = tags; // Overwrite the array of objects - [{name: 'tag1'}, {name: 'tag2'}] with just an array ['tag1', 'tag2']
+      return res.status(201).json(result);
     } catch (error: any) {
-      Utils.log.info(`Error trying to add new tool. Message: ${error.message}`)
+      Utils.log.info(`Error trying to add new tool. Message: ${error.message}`);
       return res.status(400).json({
-        message: error.message
-      })
+        message: error.message,
+      });
     }
   }
 
@@ -62,33 +62,55 @@ class ToolsController {
         include: {
           tags: {
             select: {
-              name: true
-            }
-          }
-        }
-      })
-      const result = Utils.removeNamePropertyFromToolTagsArray(tools)
-      Utils.log.info('All tools returned to the client.')
-      return res.json(result)
-    } catch(error: any) {
-      Utils.log.error(`Error trying to get tools. Message: ${error.message}`)
-      return res.status(400).json([])
+              name: true,
+            },
+          },
+        },
+      });
+      const result = Utils.removeNamePropertyFromToolTagsArray(tools);
+      Utils.log.info('All tools returned to the client.');
+      return res.json(result);
+    } catch (error: any) {
+      Utils.log.error(`Error trying to get tools. Message: ${error.message}`);
+      return res.status(400).json([]);
     }
-    
   }
 
   async deleteTool(req: Request, res: Response) {
-    const { id } = req.params
+    const { id } = req.params;
 
     await client.tool.delete({
       where: {
-        id: Number(id)
+        id: Number(id),
+      },
+    });
+
+    return res.sendStatus(200);
+  }
+
+  async filterTools(req: Request<{}, {}, {}, filterTool>, res: Response) {
+    const tag: string = req.query.tag
+    const tools = await client.tool.findMany({
+      where: {
+        tags: {
+          some: {
+            name: tag
+          }
+        }
+      },
+      include: {
+        tags: {
+          select: {
+            name: true
+          }
+        }
       }
     })
-
-    return res.sendStatus(200)
+    const result = Utils.removeNamePropertyFromToolTagsArray(tools);
+    Utils.log.info('Tools filtered sent back to the client.')
+    return res.json(result)
 
   }
 }
 
-export default new ToolsController()
+export default new ToolsController();
