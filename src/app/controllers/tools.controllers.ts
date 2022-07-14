@@ -10,6 +10,10 @@ interface addToolPayload {
   tags: Array<string>
 }
 
+interface deleteToolPayload {
+  id: string
+}
+
 class ToolsController {
   async addTool(req: Request<{}, {}, addToolPayload>, res: Response) {
     try {
@@ -71,6 +75,19 @@ class ToolsController {
       return res.status(400).json([])
     }
     
+  }
+
+  async deleteTool(req: Request, res: Response) {
+    const { id } = req.params
+
+    await client.tool.delete({
+      where: {
+        id: Number(id)
+      }
+    })
+
+    return res.sendStatus(200)
+
   }
 }
 

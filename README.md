@@ -1,7 +1,7 @@
 # Bossabox Backend Challenge
 
 ## Business logic
-- [ ] Create endpoint to get all registered tools.
+- [x] Create endpoint to get all registered tools.
 - [ ] Create endpoint to return tools with an specific tag, using query params
 - [x] Create endpoint to register a new tool.
   - [ ] Check if tags exists in database.
@@ -9,7 +9,7 @@
   - [ ] Get the id of tags saved.
   - [ ] Get the id of the tool save.
   - [ ] Create relation between the tool and tags.
-- [ ] Create endpoint to delete a tool by its id.
+- [x] Create endpoint to delete a tool by its id.
 
 ## Authentication
 - [x] Create endpoint to issue access tokens.
