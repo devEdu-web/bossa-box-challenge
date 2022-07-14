@@ -2,17 +2,7 @@ import { Tool, Tag } from '@prisma/client';
 import { Request, Response } from 'express';
 import client from '../../database/client';
 import Utils from '../../utils/Utils';
-
-interface addToolPayload {
-  title: string;
-  link: string;
-  description: string;
-  tags: Array<string>;
-}
-
-interface filterTool {
-  tag: string
-}
+import { addToolPayload } from '../../global/interfaces/tools.controller.interfaces';
 
 class ToolsController {
   async addTool(req: Request<{}, {}, addToolPayload>, res: Response) {
@@ -88,28 +78,27 @@ class ToolsController {
     return res.sendStatus(200);
   }
 
-  async filterTools(req: Request<{}, {}, {}, filterTool>, res: Response) {
-    const tag: string = req.query.tag
+  async filterTools(req: Request<{}, {}, {}, { tag: string }>, res: Response) {
+    const { tag } = req.query;
     const tools = await client.tool.findMany({
       where: {
         tags: {
           some: {
-            name: tag
-          }
-        }
+            name: tag,
+          },
+        },
       },
       include: {
         tags: {
           select: {
-            name: true
-          }
-        }
-      }
-    })
+            name: true,
+          },
+        },
+      },
+    });
     const result = Utils.removeNamePropertyFromToolTagsArray(tools);
-    Utils.log.info('Tools filtered sent back to the client.')
-    return res.json(result)
-
+    Utils.log.info('Tools filtered sent back to the client.');
+    return res.json(result);
   }
 }
 
