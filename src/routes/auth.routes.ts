@@ -1,9 +1,14 @@
 import express, { Router } from 'express'
 import authController from '../app/controllers/auth.controllers'
-import authMiddleware from '../app/middlewares/auth.middleware'
+
+import { registerController } from '../app/controllers/index'
+
 const authRouter = Router()
 
-authRouter.post('/register', authController.registerUser)
+authRouter.post('/register', (req, res) => {
+  return registerController.handle(req, res)
+})
+
 authRouter.post('/tokens/new', authController.issueTokensController)
 
 

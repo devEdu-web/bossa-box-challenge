@@ -8,38 +8,6 @@ import {
 } from '../../global/interfaces/auth.controller.interfaces';
 
 class AuthController {
-  public async registerUser(
-    req: Request<{}, {}, registerUserPayload>,
-    res: Response
-  ): Promise<Response> {
-    const { firstName, lastName, email, password } = req.body;
-
-    try {
-      const hashedPassword = await Utils.hashPassword(password);
-      const savedUser = await client.user.create({
-        data: {
-          firstName,
-          lastName,
-          email,
-          password: hashedPassword,
-        },
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          email: true,
-        },
-      });
-      Utils.log.info('New user inserted into database successfully.');
-      return res.status(201).json(savedUser);
-    } catch (error) {
-      // Assuming the error was due to duplicate key (email)
-      Utils.log.info('Attempt to register user failed.');
-      return res.status(400).json({
-        error: 'Email already in use.',
-      });
-    }
-  }
 
   public async issueTokensController(
     req: Request<{}, {}, issueTokensPayload>,
