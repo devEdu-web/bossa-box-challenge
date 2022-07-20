@@ -1,11 +1,13 @@
 import { User } from '@prisma/client';
-import { IUserRepository } from './UserRepository.d'
-import client from '../database/client'
-import Utils from '../utils/Utils'
+import { IUserRepository } from './UserRepository.d';
+import client from '../database/client';
+import Utils from '../utils/Utils';
 
 export class UserRepository implements IUserRepository {
-  async registerUser(user: Omit<User, 'createdAt' | 'id'>): Promise<Omit<User, 'createdAt' | 'password'> | object> {
-    const { email, password, firstName, lastName } = user
+  async registerUser(
+    user: Omit<User, 'createdAt' | 'id'>
+  ): Promise<Omit<User, 'createdAt' | 'password'> | object> {
+    const { email, password, firstName, lastName } = user;
     try {
       const hashedPassword = await Utils.hashPassword(password);
       const savedUser = await client.user.create({
@@ -22,21 +24,18 @@ export class UserRepository implements IUserRepository {
           email: true,
         },
       });
-      return savedUser
-
+      return savedUser;
     } catch (error) {
-      throw new Error('Email already exists.')
+      throw new Error('Email already exists.');
     }
   }
-
 
   async findUser(email: string): Promise<User | null> {
     const user = await client.user.findUnique({
       where: {
-        email
-      }
-    })
-    return user
+        email,
+      },
+    });
+    return user;
   }
-
 }

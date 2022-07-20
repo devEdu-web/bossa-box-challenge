@@ -1,12 +1,10 @@
-import { UserRepository } from "../../repositories/UserRepository";
-import client from '../../database/client'
-import Utils from '../../utils/Utils'
-import config from '../../config/default'
+import { UserRepository } from '../../repositories/UserRepository';
+import client from '../../database/client';
+import Utils from '../../utils/Utils';
+import config from '../../config/default';
 
 export class LogUserService {
-  constructor(
-    UserRepository: UserRepository
-  ) {}
+  constructor(UserRepository: UserRepository) {}
 
   async execute(email: string, password: string) {
     try {
@@ -20,7 +18,7 @@ export class LogUserService {
         user?.password
       );
       if (!user || !isPasswordValid)
-        throw new Error('Email or password invalid.' );
+        throw new Error('Email or password invalid.');
 
       const accessToken = Utils.signJwt(
         {
@@ -50,12 +48,9 @@ export class LogUserService {
         accessToken,
         refreshToken,
       };
-
     } catch (error: any) {
       console.log(error);
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
-
-
 }

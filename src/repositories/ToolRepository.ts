@@ -1,70 +1,71 @@
-import client from '../database/client'
-import { Tag, Tool } from '@prisma/client'
+import client from '../database/client';
+import { Tag, Tool } from '@prisma/client';
 
-export interface IBaseObject {name: string;}
+export interface IBaseObject {
+  name: string;
+}
 
 interface IToolPreSave {
-  title: string
-  link: string
-  description: string
-  tags: IBaseObject[]
+  title: string;
+  link: string;
+  description: string;
+  tags: IBaseObject[];
 }
 
 interface ICreatedTool {
-  title: string
-  link: string
-  description: string
-  tags: Tag[]
+  title: string;
+  link: string;
+  description: string;
+  tags: Tag[];
 }
 
 interface ITools extends Tool {
   tags: {
-    name: string
-  } []
+    name: string;
+  }[];
 }
 
 interface IToolRepository {
-  create(tool: IToolPreSave): Promise<ICreatedTool | undefined>
-  getTools(): Promise<ITools[] | []>
-  filterToolByTag(tag: string): Promise<ITools[] | []>
-  deleteTool(id: number): Promise<boolean>
+  create(tool: IToolPreSave): Promise<ICreatedTool | undefined>;
+  getTools(): Promise<ITools[] | []>;
+  filterToolByTag(tag: string): Promise<ITools[] | []>;
+  deleteTool(id: number): Promise<boolean>;
 }
 
 export class ToolRepository implements IToolRepository {
   async create(tool: IToolPreSave): Promise<ICreatedTool | undefined> {
     try {
-      const { title, description, link, tags } = tool
-    let result = await client.tool.upsert({
-      where: {
-        title: title,
-      },
-      update: {
-        title,
-        link,
-        description,
-      },
-      create: {
-        title,
-        link,
-        description,
-        tags: {
-          create: tags,
+      const { title, description, link, tags } = tool;
+      let result = await client.tool.upsert({
+        where: {
+          title: title,
         },
-      },
-      select: {
-        id: true,
-        title: true,
-        link: true,
-        description: true,
-        tags: true,
-      },
-    });
-    return result
+        update: {
+          title,
+          link,
+          description,
+        },
+        create: {
+          title,
+          link,
+          description,
+          tags: {
+            create: tags,
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          link: true,
+          description: true,
+          tags: true,
+        },
+      });
+      return result;
     } catch (error) {
-      return undefined
+      return undefined;
     }
   }
-
 
   async getTools(): Promise<ITools[] | []> {
     try {
@@ -78,10 +79,9 @@ export class ToolRepository implements IToolRepository {
         },
       });
 
-      return tools
-
+      return tools;
     } catch (error) {
-      return []
+      return [];
     }
   }
 
@@ -103,9 +103,9 @@ export class ToolRepository implements IToolRepository {
           },
         },
       });
-      return tools
+      return tools;
     } catch (error) {
-      return []
+      return [];
     }
   }
 
@@ -116,10 +116,9 @@ export class ToolRepository implements IToolRepository {
           id: Number(id),
         },
       });
-      return true
+      return true;
     } catch (error) {
-      return false
+      return false;
     }
   }
-
 }
