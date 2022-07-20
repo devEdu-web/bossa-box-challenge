@@ -26,7 +26,7 @@ interface ITools extends Tool {
 interface IToolRepository {
   create(tool: IToolPreSave): Promise<ICreatedTool | undefined>
   getTools(): Promise<ITools[] | []>
-  filterTool(tag: string): Promise<ITools[] | []>
+  filterToolByTag(tag: string): Promise<ITools[] | []>
   deleteTool(id: number): Promise<boolean>
 }
 
@@ -85,7 +85,7 @@ export class ToolRepository implements IToolRepository {
     }
   }
 
-  async filterTool(tag: string): Promise<ITools[] | []> {
+  async filterToolByTag(tag: string): Promise<ITools[] | []> {
     try {
       const tools = await client.tool.findMany({
         where: {
