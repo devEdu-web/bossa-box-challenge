@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { createToolController } from '../app/controllers/index'
+import { createToolController, getToolsController } from '../app/controllers/index'
 import authMiddleware from "../app/middlewares/auth.middleware";
 const toolsRouter = Router()
 
-// toolsRouter.get('/', authMiddleware.requireUser, toolsControllers.getTools)
+toolsRouter.get('/', authMiddleware.requireUser, (req, res) => {
+  return getToolsController.handle(req, res)
+})
+
 // toolsRouter.get('/filter', authMiddleware.requireUser, toolsControllers.filterTools)
 
 toolsRouter.post('/new', authMiddleware.requireUser, (req, res) => {
