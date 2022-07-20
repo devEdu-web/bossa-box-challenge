@@ -1,7 +1,6 @@
-import express, { Router } from 'express'
-import authController from '../app/controllers/auth.controllers'
+import { Router } from 'express'
 
-import { registerController } from '../app/controllers/index'
+import { registerController, issueTokensController } from '../app/controllers/index'
 
 const authRouter = Router()
 
@@ -9,7 +8,9 @@ authRouter.post('/register', (req, res) => {
   return registerController.handle(req, res)
 })
 
-authRouter.post('/tokens/new', authController.issueTokensController)
+authRouter.post('/tokens/new', (req, res) => {
+  return issueTokensController.handle(req, res)
+})
 
 
 export default authRouter

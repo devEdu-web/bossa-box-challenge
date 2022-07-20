@@ -1,19 +1,14 @@
-import { Request, Response } from 'express';
-import Utils from '../../utils/Utils';
-import client from '../../database/client';
-import config from '../../config/default';
-import {
-  issueTokensPayload,
-  registerUserPayload,
-} from '../../global/interfaces/auth.controller.interfaces';
+import { UserRepository } from "../../repositories/UserRepository";
+import client from '../../database/client'
+import Utils from '../../utils/Utils'
+import config from '../../config/default'
 
-class AuthController {
+export class LogUserService {
+  constructor(
+    UserRepository: UserRepository
+  ) {}
 
-  public async issueTokensController(
-    req: Request<{}, {}, issueTokensPayload>,
-    res: Response
-  ): Promise<Response> {
-    const { email, password } = req.body;
+  async execute(email: string, password: string) {
     try {
       const user = await client.user.findUnique({
         where: {
@@ -25,7 +20,7 @@ class AuthController {
         user?.password
       );
       if (!user || !isPasswordValid)
-        return res.json({ error: 'Email or password invalid.' });
+        throw new Error('Email or password invalid.' );
 
       const accessToken = Utils.signJwt(
         {
@@ -50,17 +45,17 @@ class AuthController {
       Utils.log.info(
         `New access and refresh tokens issued to the user with email ${user.email}`
       );
-      return res.status(200).json({
+
+      return {
         accessToken,
         refreshToken,
-      });
+      };
+
     } catch (error: any) {
       console.log(error);
-      return res.status(500).json({
-        error: error.message,
-      });
+      throw new Error(error.message)
     }
   }
-}
 
-export default new AuthController();
+
+}

@@ -30,8 +30,13 @@ export class UserRepository implements IUserRepository {
   }
 
 
-  findUser(email: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findUser(email: string): Promise<User | null> {
+    const user = await client.user.findUnique({
+      where: {
+        email
+      }
+    })
+    return user
   }
 
 }
