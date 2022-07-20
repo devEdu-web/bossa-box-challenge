@@ -5,63 +5,15 @@ import Utils from '../../utils/Utils';
 import { addToolPayload } from '../../global/interfaces/tools.controller.interfaces';
 
 class ToolsController {
-  async addTool(req: Request<{}, {}, addToolPayload>, res: Response) {
-    try {
-      const { title, link, description, tags } = req.body;
-      const tagsInObject = Utils.genCreateTagArray(tags);
-
-      let result: any = await client.tool.upsert({
-        where: {
-          title: title,
-        },
-        update: {
-          title,
-          link,
-          description,
-        },
-        create: {
-          title,
-          link,
-          description,
-          tags: {
-            create: tagsInObject,
-          },
-        },
-        select: {
-          id: true,
-          title: true,
-          link: true,
-          description: true,
-          tags: true,
-        },
-      });
-      Utils.log.info('New tool created with its relations.');
-      result.tags = tags; // Overwrite the array of objects - [{name: 'tag1'}, {name: 'tag2'}] with just an array ['tag1', 'tag2']
-      return res.status(201).json(result);
-    } catch (error: any) {
-      Utils.log.info(`Error trying to add new tool. Message: ${error.message}`);
-      return res.status(400).json({
-        message: error.message,
-      });
-    }
-  }
 
   async getTools(req: Request, res: Response) {
     try {
-      const tools: any = await client.tool.findMany({
-        include: {
-          tags: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
-      const result = Utils.removeNamePropertyFromToolTagsArray(tools);
-      Utils.log.info('All tools returned to the client.');
-      return res.json(result);
+
+      // const result = Utils.removeNamePropertyFromToolTagsArray(tools);
+      
+      // return res.json(result);
     } catch (error: any) {
-      Utils.log.error(`Error trying to get tools. Message: ${error.message}`);
+      
       return res.status(400).json([]);
     }
   }
@@ -69,36 +21,17 @@ class ToolsController {
   async deleteTool(req: Request, res: Response) {
     const { id } = req.params;
 
-    await client.tool.delete({
-      where: {
-        id: Number(id),
-      },
-    });
+
 
     return res.sendStatus(200);
   }
 
   async filterTools(req: Request<{}, {}, {}, { tag: string }>, res: Response) {
     const { tag } = req.query;
-    const tools = await client.tool.findMany({
-      where: {
-        tags: {
-          some: {
-            name: tag,
-          },
-        },
-      },
-      include: {
-        tags: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
-    const result = Utils.removeNamePropertyFromToolTagsArray(tools);
-    Utils.log.info('Tools filtered sent back to the client.');
-    return res.json(result);
+
+    // const result = Utils.removeNamePropertyFromToolTagsArray(tools);
+    
+    // return res.json(result);
   }
 }
 

@@ -70,7 +70,7 @@ class Utils implements UtilsInterface {
   }
 
   genCreateTagArray(tags: string[]) {
-    const createTagsArray: Array<object> = [];
+    const createTagsArray: Array<IBaseObject> = [];
 
     tags.forEach((tag) => {
       const baseObject: IBaseObject = {
