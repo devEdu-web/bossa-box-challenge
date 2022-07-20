@@ -12,6 +12,8 @@ import { LogUserService } from '../../services/Users/logUserService'
 import { CreateToolService } from '../../services/Tools/CreateToolService'
 import { GetToolsService } from '../../services/Tools/GetToolsService'
 import { GetToolsController } from './tools/GetToolsController'
+import { DeleteToolController } from './tools/DeleteToolController'
+import { DeleteToolService } from '../../services/Tools/DeleteToolService'
 
 const userRepository = new UserRepository()
 const toolRepository = new ToolRepository()
@@ -21,9 +23,11 @@ const logUserService = new LogUserService(userRepository)
 
 const createToolService = new CreateToolService(toolRepository)
 const getToolsService = new GetToolsService(toolRepository)
+const deleteToolService = new DeleteToolService(toolRepository)
 
 const createToolController = new CreateToolController(createToolService)
 const getToolsController = new GetToolsController(getToolsService)
+const deleteToolController = new DeleteToolController(deleteToolService)
 
 const registerController = new RegisterController(createUserService)
 const issueTokensController = new IssueTokensController(logUserService)
@@ -32,5 +36,6 @@ export {
   registerController,
   issueTokensController,
   createToolController,
-  getToolsController
+  getToolsController,
+  deleteToolController
 }

@@ -6,18 +6,6 @@ import { addToolPayload } from '../../global/interfaces/tools.controller.interfa
 
 class ToolsController {
 
-  async getTools(req: Request, res: Response) {
-    try {
-
-      // const result = Utils.removeNamePropertyFromToolTagsArray(tools);
-      
-      // return res.json(result);
-    } catch (error: any) {
-      
-      return res.status(400).json([]);
-    }
-  }
-
   async deleteTool(req: Request, res: Response) {
     const { id } = req.params;
 
