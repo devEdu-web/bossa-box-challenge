@@ -1,6 +1,6 @@
 import express from 'express';
 import authRouter from './routes/auth.routes';
-import authMiddleware from './app/middlewares/auth.middleware';
+import { deserializeUserMiddleware } from './app/middlewares/index';
 import toolsRouter from './routes/tools.routes';
 
 class App {
@@ -14,7 +14,7 @@ class App {
 
   private middlewares() {
     this.express.use(express.json());
-    this.express.use(authMiddleware.deserializeUser);
+    this.express.use(deserializeUserMiddleware);
   }
 
   private routes() {

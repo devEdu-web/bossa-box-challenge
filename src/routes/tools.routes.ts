@@ -5,22 +5,24 @@ import {
   deleteToolController,
   filterToolByTagController,
 } from '../app/controllers/index';
-import authMiddleware from '../app/middlewares/auth.middleware';
+
+import {  requireUserMiddleware } from '../app/middlewares/index';
+
 const toolsRouter = Router();
 
-toolsRouter.get('/', authMiddleware.requireUser, (req, res) => {
+toolsRouter.get('/', requireUserMiddleware, (req, res) => {
   return getToolsController.handle(req, res);
 });
 
-toolsRouter.get('/filter', authMiddleware.requireUser, (req, res) => {
+toolsRouter.get('/filter', requireUserMiddleware, (req, res) => {
   return filterToolByTagController.handle(req, res);
 });
 
-toolsRouter.post('/new', authMiddleware.requireUser, (req, res) => {
+toolsRouter.post('/new', requireUserMiddleware, (req, res) => {
   return createToolController.handle(req, res);
 });
 
-toolsRouter.delete('/delete/:id', authMiddleware.requireUser, (req, res) => {
+toolsRouter.delete('/delete/:id', requireUserMiddleware, (req, res) => {
   return deleteToolController.handle(req, res);
 });
 
