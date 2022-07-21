@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 import { CreateToolService } from '../../../services/Tools/CreateToolService';
-import { IController } from '../controller';
+import { IController } from '../../../global/interfaces/http';
 
 export class CreateToolController implements IController {
   constructor(private CreateToolService: CreateToolService) {}

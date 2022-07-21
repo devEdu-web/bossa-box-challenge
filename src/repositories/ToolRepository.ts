@@ -1,29 +1,4 @@
 import client from '../database/client';
-import { Tag, Tool } from '@prisma/client';
-
-export interface IBaseObject {
-  name: string;
-}
-
-interface IToolPreSave {
-  title: string;
-  link: string;
-  description: string;
-  tags: IBaseObject[];
-}
-
-interface ICreatedTool {
-  title: string;
-  link: string;
-  description: string;
-  tags: Tag[];
-}
-
-interface ITools extends Tool {
-  tags: {
-    name: string;
-  }[];
-}
 
 interface IToolRepository {
   create(tool: IToolPreSave): Promise<ICreatedTool | undefined>;

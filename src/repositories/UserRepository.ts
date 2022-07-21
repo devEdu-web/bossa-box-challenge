@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { IUserRepository } from './UserRepository.d';
+import { IUserRepository } from '../global/interfaces/userRepository';
 import client from '../database/client';
 import Utils from '../utils/Utils';
 

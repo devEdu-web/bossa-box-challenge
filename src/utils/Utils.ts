@@ -7,11 +7,10 @@ import config from '../config/default';
 import {
   IBaseObject,
   IGetToolsResult,
-  IJwtDecoded,
   IJwtPayload,
   IVerifyJwtReturn,
   UtilsInterface,
-} from '../global/interfaces/utils.interfaces';
+} from '../global/interfaces/utils';
 
 const publicKey = config.publicKey;
 const privateKey = config.privateKey;

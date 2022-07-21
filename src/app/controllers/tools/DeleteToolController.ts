@@ -1,4 +1,4 @@
-import { IController } from '../controller';
+import { IController } from '../../../global/interfaces/http';
 import { DeleteToolService } from '../../../services/Tools/DeleteToolService';
 import { Request, Response } from 'express';
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateUserService } from '../../../services/Users/CreateUserService';
-import { IController } from '../controller';
+import { IController } from '../../../global/interfaces/http';
 
 export class RegisterController implements IController {
   constructor(private CreateUserService: CreateUserService) {}

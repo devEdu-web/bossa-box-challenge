@@ -4,7 +4,6 @@ import config from '../../config/default';
 
 export class DeserializeUserMiddleware {
   execute(req: Request, res: Response, next: NextFunction) {
-    console.log('deserialize user middleware')
     const accessToken = req.headers.authorization?.replace('Bearer ', '');
     const refreshToken = String(req.headers['x-refresh-token']);
 

@@ -1,8 +1,6 @@
-import { IController } from '../controller';
+import { IController } from '../../../global/interfaces/http';
 import { FilterToolByTagService } from '../../../services/Tools/FilterToolByTagService';
 import { Request, Response } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 
 export class FilterToolByTagController implements IController {
   constructor(private FilterToolByTagService: FilterToolByTagService) {}

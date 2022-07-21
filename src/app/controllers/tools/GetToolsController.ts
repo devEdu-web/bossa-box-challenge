@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { GetToolsService } from '../../../services/Tools/GetToolsService';
-import { IController } from '../controller';
+import { IController } from '../../../global/interfaces/http';
 
 export class GetToolsController implements IController {
   constructor(private GetToolsService: GetToolsService) {}

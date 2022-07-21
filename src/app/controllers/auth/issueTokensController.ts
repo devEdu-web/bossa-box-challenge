@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IController } from '../controller';
+import { IController } from '../../../global/interfaces/http';
 import { LogUserService } from '../../../services/Users/logUserService';
 
 export class IssueTokensController implements IController {

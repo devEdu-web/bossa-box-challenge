@@ -1,12 +1,7 @@
 import { ToolRepository } from '../../repositories/ToolRepository';
 import Util from '../../utils/Utils';
+import { IToolPayload } from '../../global/interfaces/types'
 
-interface IToolPayload {
-  title: string;
-  link: string;
-  description: string;
-  tags: string[];
-}
 
 export class CreateToolService {
   constructor(private ToolRepository: ToolRepository) {}
